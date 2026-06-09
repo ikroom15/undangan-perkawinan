@@ -25,7 +25,7 @@ const CONFIG = {
   eventDateDisplay: "Jumat, 12 Juni 2026",
   eventTimeDisplay: "17.00 WIB – Selesai",
   venueName:        "Kediaman Keluarga Besar",
-  venueAddress:     "Jl. Melati No. 45, Desa Sukamaju,\nKec. Bahagia, Kab. Sejahtera, Jawa Timur",
+  venueAddress:     "Jl. Mawar, Desa BunutWetan,\nKec. Pakis, Kab. Malang, Jawa Timur",
 
   // ── LOKASI — LINK LANGSUNG KLIK ──────────
   googleMapsLink:  "https://maps.app.goo.gl/ER7YNLrwUniRT1is8",
