@@ -8,7 +8,7 @@ const CONFIG = {
     fullName:   "MOCH. KHUSNUL IKROOM",
     shortName:  "Ikroom",
     father:     "Bapak Makhrudi",
-    mother:     "Ibu Harian",
+    mother:     "Ibu Hariani",
     photo:      "images/pria.jpg",
   },
   bride: {
