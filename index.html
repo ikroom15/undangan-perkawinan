@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="theme-color" content="#080808"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="description" content="Undangan Pernikahan Digital"/>
+  <title>Undangan Pernikahan</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+
+  <!-- Firebase SDK (v10 modular via CDN compat) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <link rel="stylesheet" href="style.css"/>
+  <script src="config.js"></script>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     GATE — HALAMAN VALIDASI TAMU
+═══════════════════════════════════════════ -->
+<div id="gate">
+  <!-- ambient background -->
+  <div class="gate-bg">
+    <div class="gate-orb gate-orb--a"></div>
+    <div class="gate-orb gate-orb--b"></div>
+    <canvas id="starsCanvas"></canvas>
+  </div>
+
+  <!-- ornamen geometris sudut -->
+  <div class="corner-orn corner-orn--tl"></div>
+  <div class="corner-orn corner-orn--tr"></div>
+  <div class="corner-orn corner-orn--bl"></div>
+  <div class="corner-orn corner-orn--br"></div>
+
+  <div class="gate-card">
+    <!-- bismillah & seal -->
+    <div class="gate-top">
+      <div class="gate-seal">
+        <svg viewBox="0 0 100 100" class="seal-ring-svg">
+          <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="0.7" stroke-dasharray="4 3" opacity="0.4"/>
+          <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.25"/>
+          <text x="50" y="46" text-anchor="middle" font-size="11" fill="currentColor" opacity=".8" font-family="serif">بِسْمِ اللَّهِ</text>
+          <text x="50" y="62" text-anchor="middle" font-size="9"  fill="currentColor" opacity=".6" font-family="serif">الرَّحْمَٰنِ الرَّحِيمِ</text>
+        </svg>
+      </div>
+      <p class="gate-subtitle">Undangan Pernikahan</p>
+      <h1 class="gate-names">
+        <span id="g-groom-short"></span>
+        <em class="gate-amp">&amp;</em>
+        <span id="g-bride-short"></span>
+      </h1>
+      <p class="gate-date" id="g-date"></p>
+    </div>
+
+    <div class="gate-divider"><span></span><span class="gd-diamond">✦</span><span></span></div>
+
+    <!-- form -->
+    <div class="gate-form-area">
+      <p class="gate-form-intro">Kepada Yth. Bapak/Ibu/Saudara/i</p>
+
+      <div class="field-group">
+        <label class="field-label" for="inp-name">Nama Lengkap</label>
+        <div class="field-wrap">
+          <span class="field-icon">👤</span>
+          <input id="inp-name" type="text" inputmode="text"
+            autocomplete="name" autocorrect="off" spellcheck="false"
+            maxlength="80" placeholder="Masukkan nama Anda"/>
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label class="field-label" for="inp-phone">Nomor WhatsApp</label>
+        <div class="field-wrap">
+          <span class="field-icon">📱</span>
+          <input id="inp-phone" type="tel" inputmode="numeric"
+            autocomplete="tel" maxlength="16" placeholder="Contoh: 08123456789"/>
+        </div>
+      </div>
+
+      <button id="submitBtn" type="button" class="btn-submit">
+        <span id="submitBtnText">Masuk</span>
+        <span id="submitSpinner" class="spinner" hidden></span>
+      </button>
+
+      <!-- status messages -->
+      <div id="statusBox" class="status-box" hidden></div>
+
+      <!-- tombol buka undangan (muncul setelah validasi) -->
+      <button id="openInvBtn" type="button" class="btn-open" hidden>
+        ✦ Buka Undangan ✦
+      </button>
+    </div>
+  </div>
+</div><!-- /gate -->
+
+
+<!-- ═══════════════════════════════════════════
+     INVITATION — KONTEN UTAMA (hidden sampai validasi)
+═══════════════════════════════════════════ -->
+<main id="invitation" aria-hidden="true">
+
+  <!-- audio (src diset via JS) -->
+  <audio id="bgAudio" loop preload="auto"></audio>
+
+  <!-- ── HERO ──────────────────────────────── -->
+  <section class="sec-hero">
+    <div class="hero-bg-layer"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-geo hero-geo--tl"></div>
+    <div class="hero-geo hero-geo--br"></div>
+    <div class="hero-content anim-fade">
+      <p class="hero-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+      <p class="hero-salam" id="h-salam"></p>
+      <div class="hero-orn"><span></span><em>◆</em><span></span></div>
+      <p class="hero-label">Pernikahan</p>
+      <div class="hero-names">
+        <span class="hero-groom" id="h-groom"></span>
+        <span class="hero-amp-hero">＆</span>
+        <span class="hero-bride" id="h-bride"></span>
+      </div>
+      <div class="hero-orn"><span></span><em>◆</em><span></span></div>
+      <p class="hero-date" id="h-date"></p>
+      <div class="hero-scroll-hint">
+        <span>Gulir ke bawah</span>
+        <div class="hero-arrow"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COUNTDOWN ─────────────────────────── -->
+  <section class="sec sec-countdown anim-up">
+    <div class="sec-inner">
+      <div class="sec-tag">Menuju Hari Bahagia</div>
+      <div class="countdown-grid" id="countdown">
+        <div class="cd-box"><span class="cd-num" id="cd-days">00</span><span class="cd-lbl">Hari</span></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-box"><span class="cd-num" id="cd-hours">00</span><span class="cd-lbl">Jam</span></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-box"><span class="cd-num" id="cd-mins">00</span><span class="cd-lbl">Menit</span></div>
+        <div class="cd-colon">:</div>
+        <div class="cd-box"><span class="cd-num" id="cd-secs">00</span><span class="cd-lbl">Detik</span></div>
+      </div>
+      <p class="cd-subtitle" id="cd-subtitle"></p>
+    </div>
+  </section>
+
+  <!-- ── AYAT AL-QURAN ─────────────────────── -->
+  <section class="sec sec-quran">
+    <div class="sec-inner">
+      <div class="sec-tag">Ayat Cinta</div>
+      <div id="versesContainer"></div>
+    </div>
+  </section>
+
+  <!-- ── MEMPELAI ──────────────────────────── -->
+  <section class="sec sec-couple">
+    <div class="sec-inner">
+      <div class="sec-tag">Kedua Mempelai</div>
+      <div class="couple-wrap">
+
+        <!-- Pengantin Pria -->
+        <div class="person-card anim-up">
+          <div class="person-photo-frame">
+            <img id="photo-groom" src="" alt="Foto Pengantin Pria" loading="lazy"/>
+            <div class="photo-corner photo-corner--tl"></div>
+            <div class="photo-corner photo-corner--tr"></div>
+            <div class="photo-corner photo-corner--bl"></div>
+            <div class="photo-corner photo-corner--br"></div>
+          </div>
+          <div class="person-info">
+            <span class="person-role">Pengantin Pria</span>
+            <h3 class="person-name" id="p-groom-name"></h3>
+            <p class="person-parents">
+              Putra dari<br/>
+              <span id="p-groom-father"></span> &amp; <span id="p-groom-mother"></span>
+            </p>
+          </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="couple-mid">
+          <div class="couple-mid-line"></div>
+          <div class="couple-mid-circle">
+            <span>♡</span>
+          </div>
+          <div class="couple-mid-line"></div>
+        </div>
+
+        <!-- Pengantin Wanita -->
+        <div class="person-card anim-up">
+          <div class="person-photo-frame">
+            <img id="photo-bride" src="" alt="Foto Pengantin Wanita" loading="lazy"/>
+            <div class="photo-corner photo-corner--tl"></div>
+            <div class="photo-corner photo-corner--tr"></div>
+            <div class="photo-corner photo-corner--bl"></div>
+            <div class="photo-corner photo-corner--br"></div>
+          </div>
+          <div class="person-info">
+            <span class="person-role">Pengantin Wanita</span>
+            <h3 class="person-name" id="p-bride-name"></h3>
+            <p class="person-parents">
+              Putri dari<br/>
+              <span id="p-bride-father"></span> &amp; <span id="p-bride-mother"></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOTO GALLERY (slide in kiri/kanan) ── -->
+  <section class="sec sec-gallery">
+    <div class="sec-inner">
+      <div class="sec-tag">Galeri Foto</div>
+      <div class="gallery-list">
+        <div class="gallery-item slide-from-left" data-caption="Pengantin Pria">
+          <div class="gallery-frame">
+            <img id="gal-groom" src="" alt="Foto Pengantin Pria" loading="lazy"/>
+          </div>
+          <p class="gallery-caption">Pengantin Pria</p>
+        </div>
+        <div class="gallery-item slide-from-right" data-caption="Pengantin Wanita">
+          <div class="gallery-frame">
+            <img id="gal-bride" src="" alt="Foto Pengantin Wanita" loading="lazy"/>
+          </div>
+          <p class="gallery-caption">Pengantin Wanita</p>
+        </div>
+        <div class="gallery-item slide-from-left" data-caption="Bersama">
+          <div class="gallery-frame">
+            <img id="gal-couple" src="" alt="Foto Bersama" loading="lazy"/>
+          </div>
+          <p class="gallery-caption">Bersama</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DETAIL ACARA ───────────────────────── -->
+  <section class="sec sec-event anim-up">
+    <div class="sec-inner">
+      <div class="sec-tag">Detail Acara</div>
+      <div class="event-cards">
+        <div class="event-card">
+          <div class="event-icon">📅</div>
+          <p class="event-key">Tanggal</p>
+          <p class="event-val" id="ev-date"></p>
+        </div>
+        <div class="event-card">
+          <div class="event-icon">🕐</div>
+          <p class="event-key">Waktu</p>
+          <p class="event-val" id="ev-time"></p>
+        </div>
+        <div class="event-card" style="grid-column:1/-1">
+          <div class="event-icon">🏠</div>
+          <p class="event-key" id="ev-venue-name"></p>
+          <p class="event-val" id="ev-address"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PETA LOKASI ───────────────────────── -->
+  <section class="sec sec-maps anim-up">
+    <div class="sec-inner">
+      <div class="sec-tag">Lokasi Acara</div>
+      <div class="map-container">
+        <iframe id="mapIframe" src="" loading="lazy" allowfullscreen
+          referrerpolicy="no-referrer-when-downgrade" title="Peta Lokasi Acara"></iframe>
+      </div>
+      <!-- Tombol navigasi yang langsung bisa diklik -->
+      <a id="mapsBtn" href="#" target="_blank" rel="noopener noreferrer" class="btn-maps">
+        📍 Petunjuk Arah — Buka Google Maps
+      </a>
+      <p class="maps-address-text" id="maps-addr-text"></p>
+    </div>
+  </section>
+
+  <!-- ── AMPLOP DIGITAL / QR ───────────────── -->
+  <section class="sec sec-gift anim-up">
+    <div class="sec-inner">
+      <div class="sec-tag">Amplop Digital</div>
+      <p class="gift-note">Doa restu Anda adalah hadiah terindah. Bagi yang ingin memberikan hadiah digital, dapat melalui QRIS berikut:</p>
+      <div class="qr-frame">
+        <div class="qr-corner qr-corner--tl"></div>
+        <div class="qr-corner qr-corner--tr"></div>
+        <div class="qr-corner qr-corner--bl"></div>
+        <div class="qr-corner qr-corner--br"></div>
+        <img id="qr-img" src="" alt="QR Code Transfer" loading="lazy"/>
+      </div>
+      <p class="gift-account" id="gift-account"></p>
+    </div>
+  </section>
+
+  <!-- ── KOMENTAR & DOA (Live Firebase) ────── -->
+  <section class="sec sec-comments">
+    <div class="sec-inner">
+      <div class="sec-tag">Doa &amp; Ucapan</div>
+      <p class="comment-intro">Tuliskan doa dan ucapan terbaik Anda untuk kedua mempelai ✦</p>
+
+      <div class="comment-form-wrap" id="commentFormWrap">
+        <div class="comment-author-badge">
+          Anda menulis sebagai: <strong id="commentAuthor"></strong>
+        </div>
+        <textarea id="commentText" class="comment-textarea"
+          maxlength="400" rows="3"
+          placeholder="Tulis doa dan ucapan Anda…"></textarea>
+        <div class="comment-meta-row">
+          <span class="comment-chars" id="commentChars">0/400</span>
+          <button id="commentSubmitBtn" type="button" class="btn-comment">Kirim Doa ✦</button>
+        </div>
+      </div>
+
+      <!-- daftar komentar -->
+      <div class="comment-list" id="commentList">
+        <div class="comment-loading" id="commentLoading">
+          <div class="loader-dots"><span></span><span></span><span></span></div>
+          <p>Memuat doa dan ucapan…</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── PENUTUP ───────────────────────────── -->
+  <section class="sec sec-close anim-up">
+    <div class="sec-inner">
+      <div class="close-ornament">✦ ✦ ✦</div>
+      <p class="close-msg" id="close-msg"></p>
+      <div class="close-divider"><span></span><em>◈</em><span></span></div>
+      <p class="close-wassalam" id="close-wassalam"></p>
+      <div class="close-sig">
+        <span id="cs-groom"></span>
+        <em class="close-amp"> &amp; </em>
+        <span id="cs-bride"></span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <p>Made with <span class="footer-heart">♥</span> for a lifetime of love</p>
+  </footer>
+
+</main><!-- /invitation -->
+
+<script src="script.js"></script>
+</body>
+</html>
