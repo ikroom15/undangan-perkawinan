@@ -9,16 +9,16 @@ const CONFIG = {
     shortName:  "Ikroom",
     father:     "Bapak Makhrudi",
     mother:     "Ibu Hariani",
-    photo:      "images/pria.jpg",
+    photo:      "IMG_0810.JPG",
   },
   bride: {
     fullName:   "NISA AMELIYAH",
     shortName:  "Nisa",
     father:     "Bapak Jumain",
     mother:     "Ibu Bawon",
-    photo:      "images/wanita.jpg",
+    photo:      "IMG_0814.JPG",
   },
-  couplePhoto: "images/pasangan.jpg",
+  couplePhoto: "foto-prewed.JPG",
 
   // ── ACARA ─────────────────────────────────
   eventDateISO:     "2026-06-12T17:00:00",
@@ -31,11 +31,11 @@ const CONFIG = {
   googleMapsLink:  "https://maps.app.goo.gl/ER7YNLrwUniRT1is8",
 
   // ── QR CODE ───────────────────────────────
-  qrCodeImage:      "images/qr.jpg",
+  qrCodeImage:      "qr-code.jpeg",
   qrAccountName:    "Moch. Khusnul Ikroom & Nisa Ameliyah",
 
   // ── MUSIK ─────────────────────────────────
-  audioSrc: "audio/backsound.mp3",
+  audioSrc: "TAMU UNDANGAN (Reggae).mp3",
 
   // ── AYAT AL-QURAN ─────────────────────────
   verses: [
