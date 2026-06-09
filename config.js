@@ -18,7 +18,7 @@ const CONFIG = {
     mother:     "Ibu Bawon",
     photo:      "images/wanita.jpg",
   },
-  couplePhoto: "images/pasangan.jpg",
+  couplePhoto: "images/foto-berdua.JPG",
 
   // ── ACARA ─────────────────────────────────
   eventDateISO:     "2026-06-12T17:00:00",
@@ -31,7 +31,7 @@ const CONFIG = {
   googleMapsLink:  "https://maps.app.goo.gl/ER7YNLrwUniRT1is8",
 
   // ── QR CODE ───────────────────────────────
-  qrCodeImage:      "images/qr.jpg",
+  qrCodeImage:      "images/qris.jpeg",
   qrAccountName:    "Moch. Khusnul Ikroom & Nisa Ameliyah",
 
   // ── MUSIK ─────────────────────────────────
