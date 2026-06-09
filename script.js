@@ -311,6 +311,10 @@ function openInvitation() {
   const gate = document.getElementById('gate');
   const inv  = document.getElementById('inv');
 
+  // PERBAIKAN UTAMA: Putar musik SEGERA setelah tombol diklik (tanpa jeda setTimeout)
+  // Ini mendominasi aturan browser karena terjadi langsung di dalam tumpukan interaksi user (user-initiated gesture).
+  playAudio();
+
   gate.classList.add('exit');
 
   setTimeout(() => {
@@ -318,9 +322,6 @@ function openInvitation() {
     inv.hidden = false;
     inv.removeAttribute('aria-hidden');
     window.scrollTo({ top: 0, behavior: 'instant' });
-
-    // Musik
-    playAudio();
 
     // Aktifkan semua fitur invitation
     initCountdown();
@@ -332,7 +333,9 @@ function openInvitation() {
 function playAudio() {
   const a = document.getElementById('bgAudio');
   if (!a || !CONFIG.audioSrc) return;
-  a.play().catch(() => { /* autoplay blocked — OK */ });
+  a.play().catch((error) => { 
+    console.log("Pemutaran audio otomatis diblokir atau gagal:", error); 
+  });
 }
 
 /* ══════════════════════════════════════════════════════════════
