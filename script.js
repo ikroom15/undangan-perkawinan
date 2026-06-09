@@ -68,9 +68,6 @@ function populateConfig() {
   // Verses
   buildVerses();
 
-  // Audio
-  const a = document.getElementById('bgAudio');
-  if (a && CONFIG.audioSrc) a.src = CONFIG.audioSrc;
 }
 
 function setText(id, val) {
