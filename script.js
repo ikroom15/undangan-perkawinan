@@ -69,17 +69,8 @@ function populateConfig() {
   buildVerses();
 
   // Audio
-// Contoh implementasi di script.js
-const bukaTombol = document.querySelector('.tombol-buka'); // Sesuaikan class tombolmu
-const musikUndangan = new Audio(CONFIG.audioSrc); // Mengambil dari config.js kamu
-
-bukaTombol.addEventListener('click', function() {
-    musikUndangan.play().catch(error => {
-        console.log("Autoplay diblokir oleh browser, musik baru akan berputar setelah interaksi lanjut.", error);
-    });
-    
-    // Logika membuka atau menyembunyikan cover undangan...
-});
+  const a = document.getElementById('bgAudio');
+  if (a && CONFIG.audioSrc) a.src = CONFIG.audioSrc;
 }
 
 function setText(id, val) {
