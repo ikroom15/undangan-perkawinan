@@ -21,7 +21,7 @@ const CONFIG = {
   couplePhoto: "images/foto-berdua.JPG",
 
   // ── ACARA ─────────────────────────────────
-  eventDateISO:     "2026-06-12 17:00:00",
+  eventDateISO:     "2026-06-12T17:00:00",
   eventDateDisplay: "Jumat, 12 Juni 2026",
   eventTimeDisplay: "17.00 WIB – Selesai",
   venueName:        "Kediaman Keluarga Besar",
@@ -31,7 +31,7 @@ const CONFIG = {
   googleMapsLink:  "https://maps.app.goo.gl/ER7YNLrwUniRT1is8",
 
   // ── QR CODE ───────────────────────────────
-  qrCodeImage:      "qr-code.jpeg",
+  qrCodeImage:      "images/qris.jpeg",
   qrAccountName:    "Moch. Khusnul Ikroom & Nisa Ameliyah",
 
   // ── MUSIK ─────────────────────────────────
