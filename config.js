@@ -35,7 +35,7 @@ const CONFIG = {
   qrAccountName:    "Moch. Khusnul Ikroom & Nisa Ameliyah",
 
   // ── MUSIK ─────────────────────────────────
-  audioSrc: "audio/backsound.mp3",
+  audioSrc: "audio/lagu1.mp3",
 
   // ── AYAT AL-QURAN ─────────────────────────
   verses: [
