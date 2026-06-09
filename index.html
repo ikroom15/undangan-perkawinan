@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -15,33 +16,23 @@
 </head>
 <body>
 
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-     LAYER 1 — GATE (login tamu)
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
 <div id="gate">
   <canvas id="cosmosCanvas"></canvas>
   <div class="noise-overlay"></div>
 
-  <!-- sudut geometris -->
   <div class="geo-corner geo-tl"><svg viewBox="0 0 60 60"><path d="M0 60 L0 0 L60 0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M0 40 L0 0 L40 0" fill="none" stroke="currentColor" stroke-width=".4" opacity=".5"/></svg></div>
   <div class="geo-corner geo-tr"><svg viewBox="0 0 60 60"><path d="M60 60 L60 0 L0 0" fill="none" stroke="currentColor" stroke-width="1"/><path d="M60 40 L60 0 L20 0" fill="none" stroke="currentColor" stroke-width=".4" opacity=".5"/></svg></div>
   <div class="geo-corner geo-bl"><svg viewBox="0 0 60 60"><path d="M0 0 L0 60 L60 60" fill="none" stroke="currentColor" stroke-width="1"/><path d="M0 20 L0 60 L40 60" fill="none" stroke="currentColor" stroke-width=".4" opacity=".5"/></svg></div>
   <div class="geo-corner geo-br"><svg viewBox="0 0 60 60"><path d="M60 0 L60 60 L0 60" fill="none" stroke="currentColor" stroke-width="1"/><path d="M60 20 L60 60 L20 60" fill="none" stroke="currentColor" stroke-width=".4" opacity=".5"/></svg></div>
 
   <div class="gate-body">
-    <!-- Emblem animasi -->
     <div class="emblem" aria-hidden="true">
       <svg class="emblem-svg" viewBox="0 0 160 160">
-        <!-- cincin luar berputar -->
         <circle class="emblem-ring-outer" cx="80" cy="80" r="74" fill="none" stroke="url(#gRing)" stroke-width=".8" stroke-dasharray="6 4"/>
-        <!-- cincin tengah counter-rotate -->
         <circle class="emblem-ring-mid" cx="80" cy="80" r="64" fill="none" stroke="url(#gRing)" stroke-width=".5" stroke-dasharray="3 6" opacity=".5"/>
-        <!-- ornamen bintang 8 -->
         <path class="emblem-star" d="M80 18 L84 76 L80 80 L76 76 Z M80 142 L84 84 L80 80 L76 84 Z M18 80 L76 84 L80 80 L76 76 Z M142 80 L84 76 L80 80 L84 84 Z" fill="none" stroke="url(#gRing)" stroke-width=".6" opacity=".4"/>
-        <!-- teks tengah -->
         <text x="80" y="72" text-anchor="middle" class="emblem-text-ar" font-size="11">بِسْمِ اللَّهِ</text>
         <text x="80" y="88" text-anchor="middle" class="emblem-text-ar" font-size="8.5" opacity=".7">الرَّحْمَٰنِ الرَّحِيمِ</text>
-        <!-- definisi gradien -->
         <defs>
           <linearGradient id="gRing" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stop-color="#a07830"/>
@@ -62,12 +53,10 @@
 
     <p class="gate-date-tag" id="gtDate"></p>
 
-    <!-- Garis hias -->
     <div class="thin-rule" aria-hidden="true">
       <span></span><span class="tr-diamond">◆</span><span></span>
     </div>
 
-    <!-- FORM -->
     <form id="gateForm" autocomplete="off" novalidate>
       <p class="form-lead">Kepada Yth. Bapak / Ibu / Saudara/i</p>
 
@@ -87,7 +76,6 @@
       </button>
     </form>
 
-    <!-- VERIFICATION PANEL (tersembunyi dulu) -->
     <div id="verifyPanel" class="verify-panel" hidden>
       <div class="verify-icon">
         <svg viewBox="0 0 40 40" width="40" height="40">
@@ -103,17 +91,10 @@
       </button>
     </div>
 
-  </div><!-- /gate-body -->
-</div><!-- /gate -->
+  </div></div><main id="inv" hidden>
+  
+  <audio id="bgAudio" src="audio/musik.mp3" preload="auto" loop playsinline></audio>
 
-
-<!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
-     LAYER 2 — INVITATION (hidden)
-░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
-<main id="inv" hidden>
-  <audio id="bgAudio" loop preload="auto"></audio>
-
-  <!-- ▸ HERO ──────────────────────────────── -->
   <section class="hero">
     <div class="hero-grain"></div>
     <div class="hero-radial"></div>
@@ -139,7 +120,6 @@
     </div>
   </section>
 
-  <!-- ▸ COUNTDOWN ─────────────────────────── -->
   <section class="section s-countdown reveal-up">
     <div class="section-inner">
       <p class="section-eyebrow">Menuju Hari Bahagia</p>
@@ -168,7 +148,6 @@
     </div>
   </section>
 
-  <!-- ▸ QURAN ─────────────────────────────── -->
   <section class="section s-quran">
     <div class="section-inner">
       <p class="section-eyebrow">Ayat Pilihan</p>
@@ -176,7 +155,6 @@
     </div>
   </section>
 
-  <!-- ▸ MEMPELAI ───────────────────────────── -->
   <section class="section s-couple">
     <div class="section-inner">
       <p class="section-eyebrow">Kedua Mempelai</p>
@@ -217,7 +195,6 @@
         </div>
       </div>
 
-      <!-- foto bersama -->
       <div class="couple-photo-wrap reveal-up">
         <div class="couple-photo-frame">
           <img id="photoCouple" src="" alt="Foto Bersama"/>
@@ -228,7 +205,6 @@
     </div>
   </section>
 
-  <!-- ▸ ACARA ──────────────────────────────── -->
   <section class="section s-event reveal-up">
     <div class="section-inner">
       <p class="section-eyebrow">Detail Acara</p>
@@ -252,12 +228,10 @@
     </div>
   </section>
 
-  <!-- ▸ PETA LOKASI ────────────────────────── -->
   <section class="section s-maps reveal-up">
     <div class="section-inner">
       <p class="section-eyebrow">Lokasi Acara</p>
 
-      <!-- Peta visual pengganti iframe (lebih ringan di mobile) -->
       <div class="map-visual">
         <div class="map-pin-anim">
           <div class="map-ring map-ring-1"></div>
@@ -278,7 +252,6 @@
     </div>
   </section>
 
-  <!-- ▸ QR / AMPLOP DIGITAL ───────────────── -->
   <section class="section s-gift reveal-up">
     <div class="section-inner">
       <p class="section-eyebrow">Amplop Digital</p>
@@ -297,7 +270,6 @@
     </div>
   </section>
 
-  <!-- ▸ PENUTUP ────────────────────────────── -->
   <section class="section s-close reveal-up">
     <div class="section-inner">
       <div class="close-orn" aria-hidden="true">✦ &nbsp; ✦ &nbsp; ✦</div>
