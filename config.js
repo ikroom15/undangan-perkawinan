@@ -9,14 +9,14 @@ const CONFIG = {
     shortName:  "Ikroom",
     father:     "Bapak Makhrudi",
     mother:     "Ibu Hariani",
-    photo:      "images/ikroom.JPG",
+    photo:      "images/pria.jpg",
   },
   bride: {
     fullName:   "NISA AMELIYAH",
     shortName:  "Nisa",
     father:     "Bapak Jumain",
     mother:     "Ibu Bawon",
-    photo:      "images/nisa.JPG",
+    photo:      "images/wanita.jpg",
   },
   couplePhoto: "images/foto-berdua.JPG",
 
